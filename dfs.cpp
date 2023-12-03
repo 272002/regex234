@@ -31,21 +31,21 @@ public:
         }
     }
 
-    void bfs(vector<int> &ans, vector<int> &vis, int start)
+    void dfs(vector<int> &ans, vector<int> &vis, int start)
     {
-        queue<int> q;
-        q.push(start);
-        while (!q.empty())
+        stack<int> s;
+        s.push(start);
+        while (!s.empty())
         {
-            int frontnode = q.front();
-            ans.push_back(frontnode);
-            vis[frontnode] = 1;
-            q.pop();
-            for (auto chl : mp[frontnode])
+            int curr = s.top();
+            s.pop();
+            ans.push_back(curr);
+            vis[curr] = 1;
+            for (auto depth : mp[curr])
             {
-                if (!vis[chl])
+                if (!vis[depth])
                 {
-                    q.push(chl);
+                    s.push(depth);
                 }
             }
         }
@@ -69,10 +69,10 @@ int main()
     }
     vector<int> ans;
     vector<int> vis(n, 0);
-    g.bfs(ans, vis, 0);
+    g.dfs(ans, vis, 0);
     g.printgraph();
     cout << endl
-         << "Print bfs " << endl;
+         << "Print dfs " << endl;
     for (int i = 0; i < ans.size(); i++)
     {
         cout << ans[i] << " ";
